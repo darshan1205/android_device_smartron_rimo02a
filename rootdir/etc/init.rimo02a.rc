@@ -1,3 +1,7 @@
+on boot
+    # Wifi firmware reload path
+    chown wifi wifi /sys/module/wlan/parameters/fwpath
+
 on post-fs-data
     # Serial number
     chmod 644 /persist/rimo.prop
