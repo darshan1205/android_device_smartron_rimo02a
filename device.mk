@@ -102,6 +102,12 @@ PRODUCT_PACKAGES += \
     libstagefrighthw \
     libstagefright_soft_flacdec
 
+# QMI
+PRODUCT_PACKAGES += \
+    dsi_config.xml \
+    netmgr_config.xml \
+    qmi_config.xml
+
 # SDcard
 PRODUCT_CHARACTERISTICS := nosdcard
 
