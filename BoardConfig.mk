@@ -37,5 +37,13 @@ TARGET_2ND_CPU_VARIANT := cortex-a53
 TARGET_NO_BOOTLOADER := true
 TARGET_BOOTLOADER_BOARD_NAME := MSM8952
 
+# Qualcomm support
+BOARD_USES_QCOM_HARDWARE := true
+BOARD_USES_QC_TIME_SERVICES := true
+TARGET_POWERHAL_VARIANT := qcom
+
+# RIL
+TARGET_RIL_VARIANT := caf
+
 # Inherit the proprietary files
 include vendor/smartron/rimo02a/BoardConfigVendor.mk
