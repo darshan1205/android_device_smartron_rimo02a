@@ -16,5 +16,10 @@
 
 LOCAL_PATH := device/smartron/rimo02a
 
+# Keylayouts
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/keylayout/ft5x06_ts.kl:system/usr/keylayout/ft5x06_ts.kl \
+    $(LOCAL_PATH)/keylayout/gpio-keys.kl:system/usr/keylayout/gpio-keys.kl
+
 # Call the proprietary setup
 $(call inherit-product, vendor/smartron/rimo02a/rimo02a-vendor.mk)
