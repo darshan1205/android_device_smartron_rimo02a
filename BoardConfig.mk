@@ -77,5 +77,8 @@ TARGET_POWERHAL_VARIANT := qcom
 # RIL
 TARGET_RIL_VARIANT := caf
 
+# System Properties
+TARGET_SYSTEM_PROP += $(DEVICE_PATH)/system.prop
+
 # Inherit the proprietary files
 include vendor/smartron/rimo02a/BoardConfigVendor.mk
