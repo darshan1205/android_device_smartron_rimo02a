@@ -149,6 +149,10 @@ PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/android.software.webview.xml:system/etc/permissions/android.software.webview.xml \
     frameworks/native/data/etc/handheld_core_hardware.xml:system/etc/permissions/handheld_core_hardware.xml
 
+# Power
+PRODUCT_PACKAGES += \
+    power.msm8952
+
 # Radio
 PRODUCT_PACKAGES += \
     libcnefeatureconfig \
