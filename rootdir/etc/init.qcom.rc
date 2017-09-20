@@ -26,13 +26,22 @@
 #
 
 import init.qcom.usb.rc
-import init.target.rc
 
 on early-init
     chown system graphics /sys/devices/virtual/graphics/fb0/idle_time
     mount debugfs debugfs /sys/kernel/debug
     insmod /sbin/qcrypto_module.ko
     insmod /sbin/qdrbg_module.ko
+
+    mkdir /firmware 0771 system system
+    mkdir /system 0777 root root
+    symlink /data/tombstones /tombstones
+    mkdir /dsp 0771 media media
+
+on fs
+    wait /dev/block/bootdevice
+    mount_all fstab.qcom
+    write /proc/sys/vm/swappiness 100
 
 on init
     start qfintverify
@@ -42,6 +51,8 @@ on init
     # Support legacy paths
     symlink /sdcard /mnt/sdcard
     symlink /sdcard /storage/sdcard0
+
+    write /sys/module/qpnp_rtc/parameters/poweron_alarm 1
 
 on early-boot
     # set RLIMIT_MEMLOCK to 64MB
@@ -177,6 +188,151 @@ on boot
     # Allow access for CCID command/response timeout configuration
     chown system system /sys/module/ccid_bridge/parameters/bulk_msg_timeout
 
+    start rmt_storage
+    insmod /system/lib/modules/adsprpc.ko
+
+# access permission for secure touch
+    chmod 0660 /sys/devices/soc.0/78b7000.i2c/i2c-3/3-0020/input/input0/secure_touch_enable
+    chmod 0440 /sys/devices/soc.0/78b7000.i2c/i2c-3/3-0020/input/input0/secure_touch
+    chmod 0660 /sys/devices/soc.0/78b8000.i2c/i2c-4/4-0020/input/input0/secure_touch_enable
+    chmod 0440 /sys/devices/soc.0/78b8000.i2c/i2c-4/4-0020/input/input0/secure_touch
+    chown system drmrpc /sys/devices/soc.0/78b7000.i2c/i2c-3/3-0020/input/input0/secure_touch_enable
+    chown system drmrpc /sys/devices/soc.0/78b7000.i2c/i2c-3/3-0020/input/input0/secure_touch
+    chown system drmrpc /sys/devices/soc.0/78b8000.i2c/i2c-4/4-0020/input/input0/secure_touch_enable
+    chown system drmrpc /sys/devices/soc.0/78b8000.i2c/i2c-4/4-0020/input/input0/secure_touch
+    write /proc/sys/kernel/sched_boost 1
+
+service wcnss-service /system/bin/wcnss_service
+    class main
+    user system
+    group system wifi radio
+    oneshot
+
+service imsqmidaemon /system/bin/imsqmidaemon
+    class main
+    user system
+    socket ims_qmid stream 0660 system radio
+    group radio log diag
+
+service imsdatadaemon /system/bin/imsdatadaemon
+    class main
+    user system
+    socket ims_datad stream 0660 system radio
+    group system wifi radio inet log diag
+    disabled
+
+on property:sys.ims.QMI_DAEMON_STATUS=1
+    start imsdatadaemon
+
+service ims_rtp_daemon /system/bin/ims_rtp_daemon
+   class main
+   user system
+   socket ims_rtpd stream 0660 system radio
+   group radio diag inet log
+   disabled
+
+service imscmservice /system/bin/imscmservice
+   class main
+   user system
+   group radio diag inet log
+   disabled
+
+on property:sys.ims.DATA_DAEMON_STATUS=1
+    start ims_rtp_daemon
+    start imscmservice
+
+service ppd /system/vendor/bin/mm-pp-daemon
+    class late_start
+    disabled
+    user system
+    socket pps stream 0660 system system
+    group system graphics
+
+on property:init.svc.surfaceflinger=stopped
+    stop ppd
+
+on property:init.svc.surfaceflinger=running
+    start ppd
+
+on property:init.svc.surfaceflinger=restarting
+    stop ppd
+
+on property:init.svc.zygote=stopped
+    stop ppd
+
+on property:init.svc.zygote=running
+    start ppd
+
+on property:init.svc.zygote=restarting
+    stop ppd
+
+on charger
+    wait /dev/block/bootdevice/by-name/system
+    mount ext4 /dev/block/bootdevice/by-name/system /system ro barrier=1
+    load_all_props
+    setprop persist.sys.usb.config mass_storage
+    start qcom-post-boot
+    setprop persist.sys.usb.config mass_storage
+    start hvdcp_opti
+
+service dts_configurator /system/bin/dts_configurator
+    class late_start
+    user system
+    group media audio
+    oneshot
+
+service adsprpcd /system/bin/adsprpcd
+    class main
+    user media
+    group media
+
+service hvdcp_opti /system/bin/hvdcp_opti
+    class main
+    user root
+    group root
+
+on property:init.svc.dts_configurator=stopped
+    start dtseagleservice
+
+service per_mgr /system/bin/pm-service
+    class core
+    user system
+    group system
+
+service per_proxy /system/bin/pm-proxy
+    class core
+    user system
+    group system
+    disabled
+
+on property:init.svc.per_mgr=running
+    start per_proxy
+
+on property:sys.shutdown.requested=*
+    stop per_proxy
+
+service energy-awareness /system/bin/energy-awareness
+    class main
+    user root
+    group system
+    oneshot
+    disabled
+
+on boot
+    write /sys/devices/soc.0/78b8000.i2c/i2c-4/4-0020/input/input0/fw_name PR1702898-s3528t_00260005_00380008.img
+    write /sys/devices/soc.0/78b8000.i2c/i2c-4/4-0020/input/input0/update_fw 1
+
+# start goodixfp service and fingerprintd service
+service fingerprintd /system/bin/fingerprintd
+    class late_start
+    user system
+    group input
+
+service gx_fpd /system/bin/goodixfingerprintd
+    class late_start
+    user system
+    group input
+
 # msm specific files that need to be created on /data
 on post-fs-data
     # Create directory for TZ Apps
@@ -300,6 +456,21 @@ on post-fs-data
     chown radio radio /data/misc/radio/db_check_done
     chmod 0660 /data/misc/radio/db_check_done
 
+    mkdir /data/tombstones 0771 system system
+    mkdir /tombstones/modem 0771 system system
+    mkdir /tombstones/lpass 0771 system system
+    mkdir /tombstones/wcnss 0771 system system
+    mkdir /tombstones/dsps 0771 system system
+    mkdir /persist/data/sfs 0700 system system
+    mkdir /persist/data/tz 0700 system system
+    mkdir /data/misc/dts 0770 media audio
+    mkdir /data/misc/audio_pp 0771 media audio
+
+    # goodix fingerprint data by simcom start
+    mkdir /data/system/fingerprint/ 0770 system system
+    chown system system /dev/goodix_fp
+    # goodix fingerprint data by simcom end
+
 service perfd /system/vendor/bin/perfd
     class main
     user root
@@ -326,6 +497,17 @@ service ss_ramdump /system/bin/subsystem_ramdump
     user system
     group system
     disabled
+
+#start camera server as daemon
+service qcamerasvr /system/bin/mm-qcamera-daemon
+    class late_start
+    user camera
+    group camera system inet input graphics
+
+service qfp-daemon /system/bin/qfp-daemon
+   class late_start
+   user system
+   group system drmrpc
 
 on property:persist.sys.ssr.restart_level=*
     start ssr_setup
@@ -908,3 +1090,47 @@ on property:sys.dbg.coresight.enable=0
 
 on property:vold.decrypt=trigger_restart_min_framework
     start time_daemon
+
+# Allow usb charging to be disabled peristently
+on property:persist.usb.chgdisabled=1
+    write /sys/class/power_supply/battery/charging_enabled 0
+
+on property:persist.usb.chgdisabled=0
+    write /sys/class/power_supply/battery/charging_enabled 1
+
+service qseecomd /system/bin/qseecomd
+   class core
+   user root
+   group root
+
+service perfd /system/vendor/bin/perfd
+   class main
+   user root
+   disabled
+
+service seempd /system/bin/seempd
+   class late_start
+   user system
+   group system
+   socket seempdw dgram 0666 system system
+   oneshot
+
+service thermal-engine /system/vendor/bin/thermal-engine
+   class main
+   user root
+   socket thermal-send-client stream 0666 system system
+   socket thermal-recv-client stream 0660 system system
+   socket thermal-recv-passive-client stream 0666 system system
+   group root
+
+service time_daemon /system/bin/time_daemon
+   class late_start
+   user root
+   group root
+
+service audiod /system/bin/audiod
+   class late_start
+   user system
+   group system
+
+
