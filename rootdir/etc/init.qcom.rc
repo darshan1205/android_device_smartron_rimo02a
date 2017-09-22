@@ -30,8 +30,6 @@ import init.qcom.usb.rc
 on early-init
     chown system graphics /sys/devices/virtual/graphics/fb0/idle_time
     mount debugfs debugfs /sys/kernel/debug
-    insmod /sbin/qcrypto_module.ko
-    insmod /sbin/qdrbg_module.ko
 
     mkdir /firmware 0771 system system
     mkdir /system 0777 root root
@@ -44,7 +42,6 @@ on fs
     write /proc/sys/vm/swappiness 100
 
 on init
-    start qfintverify
     # Set permissions for persist partition
     mkdir /persist 0771 system system
 
@@ -67,7 +64,6 @@ on early-boot
     write /sys/kernel/codec_type/boot ${persist.sys.external}
     write /sys/kernel/boot_adsp/boot 1
     chown root audio /sys/kernel/boot_adsp/boot
-    exec u:r:qti_init_shell:s0 -- /init.qcom.early_boot.sh
 
 on boot
     chown bluetooth bluetooth /sys/module/bluetooth_power/parameters/power
@@ -129,7 +125,6 @@ on boot
     chmod 0755 /system/bin/ip
 
     chmod 0444 /sys/devices/platform/msm_hsusb/gadget/usb_state
-
 
 #   Define TCP buffer sizes for various networks
 #   ReadMin, ReadInitial, ReadMax, WriteMin, WriteInitial, WriteMax,
@@ -275,12 +270,6 @@ on charger
     setprop persist.sys.usb.config mass_storage
     start hvdcp_opti
 
-service dts_configurator /system/bin/dts_configurator
-    class late_start
-    user system
-    group media audio
-    oneshot
-
 service adsprpcd /system/bin/adsprpcd
     class main
     user media
@@ -310,13 +299,6 @@ on property:init.svc.per_mgr=running
 
 on property:sys.shutdown.requested=*
     stop per_proxy
-
-service energy-awareness /system/bin/energy-awareness
-    class main
-    user root
-    group system
-    oneshot
-    disabled
 
 on boot
     write /sys/devices/soc.0/78b8000.i2c/i2c-4/4-0020/input/input0/fw_name PR1702898-s3528t_00260005_00380008.img
@@ -477,12 +459,6 @@ service perfd /system/vendor/bin/perfd
     disabled
     socket perfd seqpacket 0666 root system
 
-service qfintverify /sbin/qfintverify
-    user root
-    class core
-    seclabel u:r:qfips:s0
-    oneshot
-
 service qcomsysd /system/bin/qcom-system-daemon
     class main
     user root
@@ -563,16 +539,6 @@ on property:bluetooth.startbtsnoop=true
 on property:bluetooth.startbtsnoop=false
     stop btsnoop
 
-service qcom-c_core-sh /system/bin/sh /init.qcom.class_core.sh
-    class core
-    user root
-    oneshot
-
-service qcom-c_main-sh /system/bin/sh /init.class_main.sh
-    class main
-    user root
-    oneshot
-
 on property:vold.decrypt=trigger_restart_framework
     start qcom-c_main-sh
     start config_bt_addr
@@ -599,11 +565,6 @@ service irsc_util /system/bin/irsc_util "/etc/sec_config"
 service rmt_storage /system/bin/rmt_storage
     class core
     user root
-
-service rfs_access /system/bin/rfs_access
-   class core
-   user root
-   group system net_raw
 
 service tftp_server /system/bin/tftp_server
    class main
@@ -644,13 +605,6 @@ on property:bluetooth.hciattach=true
 
 on property:bluetooth.hciattach=false
     setprop bluetooth.status off
-
-service hciattach_ath3k /system/bin/sh /system/etc/init.ath3k.bt.sh
-     class late_start
-     user bluetooth
-     group system bluetooth net_bt_admin misc
-     disabled
-     oneshot
 
 service bt-dun /system/bin/dun-server /dev/smd7 /dev/rfcomm0
     class late_start
@@ -747,13 +701,6 @@ on property:ro.data.large_tcp_window_size=true
 on property:sys.sysctl.tcp_adv_win_scale=*
     write /proc/sys/net/ipv4/tcp_adv_win_scale ${sys.sysctl.tcp_adv_win_scale}
 
-service btwlancoex /system/bin/sh /system/etc/init.qcom.coex.sh
-    class late_start
-    user bluetooth
-    group bluetooth net_bt_admin inet net_admin net_raw
-    disabled
-    oneshot
-
 service amp_init /system/bin/amploader -i
     class late_start
     user root
@@ -834,9 +781,6 @@ service ptt_ffbm /system/bin/ptt_socket_app -f -d
     disabled
     oneshot
 
-on property:wifi.ftmd.load=true
-    insmod /system/lib/modules/wlan.ko con_mode=5
-
 service cnss_diag /system/bin/cnss_diag --q -f -d
     class late_start
     user system
@@ -883,17 +827,6 @@ service loc_launcher /system/bin/loc_launcher
     class late_start
     group gps inet net_raw qcom_diag net_admin wifi
 
-service fm_dl /system/bin/sh /system/etc/init.qcom.fm.sh
-    class late_start
-    user system
-    group system
-    disabled
-    oneshot
-
-on property:crypto.driver.load=1
-     insmod /system/lib/modules/qce.ko
-     insmod /system/lib/modules/qcedev.ko
-
 service drmdiag /system/bin/drmdiagapp
     class late_start
      user root
@@ -911,30 +844,6 @@ service qcom-sh /system/bin/sh /init.qcom.sh
     user root
     oneshot
 
-service qcom-post-boot /system/bin/sh /system/etc/init.qcom.post_boot.sh
-    class late_start
-    user root
-    disabled
-    oneshot
-
-service wifi-sdio-on /system/bin/sh /system/etc/init.qcom.sdio.sh
-    class late_start
-    group wifi inet
-    disabled
-    oneshot
-
-service wifi-crda /system/bin/sh /system/etc/init.crda.sh
-   class late_start
-   user root
-   disabled
-   oneshot
-
-service atfwd /system/bin/ATFWD-daemon
-    class late_start
-    user system
-    disabled
-    group system radio
-
 on property:sys.boot_completed=1
     start qcom-post-boot
     start qti-testscripts
@@ -946,14 +855,6 @@ service hostapd /system/bin/hostapd -dd /data/hostapd/hostapd.conf
     group root
     oneshot
     disabled
-
-service ims_regmanager /system/bin/exe-ims-regmanagerprocessnative
-    class late_start
-    group net_bt_admin inet radio wifi
-    disabled
-
-on property:persist.ims.regmanager.mode=1
-    start ims_regmanager
 
 on property:ro.data.large_tcp_window_size=true
     # Adjust socket buffer to enlarge TCP receive window for high bandwidth (e.g. DO-RevB)
@@ -979,30 +880,6 @@ service ril-daemon3 /system/bin/rild -c 3
     user root
     disabled
     group radio cache inet misc audio sdcard_r sdcard_rw qcom_diag diag log
-
-service usb_uicc_enable /system/bin/sh /system/etc/init.qcom.uicc.sh
-    class late_start
-    user root
-    disabled
-    oneshot
-
-service usb_uicc_daemon /system/bin/usb_uicc_client
-    class main
-    user system
-    group system log net_raw
-    oneshot
-
-on property:sys.usb_uicc.enabled=1
-    start usb_uicc_enable
-
-on property:sys.usb_uicc.enabled=0
-    start usb_uicc_enable
-
-service hcidump /system/bin/sh /system/etc/hcidump.sh
-    user bluetooth
-    group bluetooth system net_bt_admin net_admin
-    disabled
-    oneshot
 
 service charger /charger
     class charger
@@ -1037,16 +914,6 @@ on property:sys.qbcharger.enable=true
 on property:sys.qbcharger.enable=false
     write /sys/power/wake_unlock QuickBoot
     stop qbcharger
-
-service bms-sh /system/bin/sh /init.qcom.bms.sh
-    class main
-    user root
-    oneshot
-
-service vm_bms /system/bin/vm_bms
-    user root
-    group root
-    disabled
 
 service msm_irqbalance /system/bin/msm_irqbalance -f /system/vendor/etc/msm_irqbalance.conf
     class core
@@ -1132,5 +999,3 @@ service audiod /system/bin/audiod
    class late_start
    user system
    group system
-
-

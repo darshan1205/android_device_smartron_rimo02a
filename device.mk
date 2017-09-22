@@ -184,27 +184,10 @@ PRODUCT_COPY_FILES += \
 # Ramdisk
 PRODUCT_PACKAGES += \
     fstab.qcom \
-    hcidump.sh \
-    init.ath3k.bt.sh \
-    init.class_main.sh \
-    init.crda.sh \
-    init.mdm.sh \
-    init.qcom.bms.sh \
-    init.qcom.bt.sh \
-    init.qcom.class_core.sh \
-    init.qcom.coex.sh \
-    init.qcom.early_boot.sh \
-    init.qcom.fm.sh \
-    init.qcom.post_boot.sh \
     init.qcom.rc \
-    init.qcom.sdio.sh \
     init.qcom.sh \
-    init.qcom.syspart_fixup.sh \
-    init.qcom.uicc.sh \
     init.qcom.usb.rc \
     init.qcom.usb.sh \
-    init.recovery.qcom.rc \
-    init.target.rc \
     ueventd.qcom.rc
 
 # Screen density
