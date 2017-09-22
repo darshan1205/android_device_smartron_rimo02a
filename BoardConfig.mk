@@ -147,6 +147,10 @@ TARGET_RIL_VARIANT := caf
 # System Properties
 TARGET_SYSTEM_PROP += $(DEVICE_PATH)/system.prop
 
+# Vendor init
+TARGET_INIT_VENDOR_LIB := libinit_rimo02a
+TARGET_RECOVERY_DEVICE_MODULES := libinit_rimo02a
+
 # WiFi
 BOARD_HAS_QCOM_WLAN := true
 BOARD_HAS_QCOM_WLAN_SDK := true
