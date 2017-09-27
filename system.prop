@@ -98,6 +98,10 @@ ro.fm.transmitter=false
 # FRP
 ro.frp.pst=/dev/block/bootdevice/by-name/config
 
+# GPS
+persist.gps.qc_nlp_in_use=0
+ro.gps.agps_provider=1
+
 # HWUI
 ro.hwui.texture_cache_size=72
 ro.hwui.layer_cache_size=48
