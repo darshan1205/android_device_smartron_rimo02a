@@ -35,5 +35,5 @@ DEVICE_PACKAGE_OVERLAYS += $(LOCAL_PATH)/overlay
 PRODUCT_GMS_CLIENTID_BASE := android-smartron
 
 PRODUCT_BUILD_PROP_OVERRIDES += \
-    BUILD_FINGERPRINT="Smartron/srtphone/rimo02a:7.1.1/T5524INDUQH-277/277:user/release-keys"
-    PRIVATE_BUILD_DESC="rimo02a-user 7.1.1 T5524INDUQH-277 277 release-keys"
+    BUILD_FINGERPRINT="Smartron/srtphone/rimo02a:7.1.2/T5524INDUQK-373/373:user/release-keys"
+    PRIVATE_BUILD_DESC="rimo02a-user 7.1.2 T5524INDUQK-373 373 release-keys"
