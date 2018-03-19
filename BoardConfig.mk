@@ -123,6 +123,9 @@ MAX_VIRTUAL_DISPLAY_DIMENSION := 2048
 # File systems
 TARGET_USERIMAGES_USE_EXT4 := true
 
+# Filesystem
+TARGET_FS_CONFIG_GEN := $(DEVICE_PATH)/config.fs
+
 # Keymaster
 TARGET_PROVIDES_KEYMASTER := true
 
