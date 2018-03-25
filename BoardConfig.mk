@@ -126,6 +126,10 @@ TARGET_USERIMAGES_USE_EXT4 := true
 # Filesystem
 TARGET_FS_CONFIG_GEN := $(DEVICE_PATH)/config.fs
 
+# GPS
+USE_DEVICE_SPECIFIC_GPS := true
+TARGET_NO_RPC := true
+
 # Keymaster
 TARGET_PROVIDES_KEYMASTER := true
 
