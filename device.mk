@@ -18,6 +18,7 @@ DEVICE_PATH := device/smartron/rimo02a
 
 # Overlays
 DEVICE_PACKAGE_OVERLAYS += $(DEVICE_PATH)/overlay
+DEVICE_PACKAGE_OVERLAYS += $(DEVICE_PATH)/overlay-lineage
 
 # Get non-open-source specific aspects
 $(call inherit-product, vendor/smartron/rimo02a/rimo02a-vendor.mk)
