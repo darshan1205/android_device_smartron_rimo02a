@@ -28,9 +28,6 @@ TARGET_VENDOR_PRODUCT_NAME := srtphone
 TARGET_VENDOR_DEVICE_NAME := rimo02a
 PRODUCT_BUILD_PROP_OVERRIDES += TARGET_DEVICE=rimo02a PRODUCT_NAME=srtphone
 
-# Overlays (inherit after vendor/cm to ensure we override it)
-DEVICE_PACKAGE_OVERLAYS += $(LOCAL_PATH)/overlay
-
 PRODUCT_GMS_CLIENTID_BASE := android-smartron
 
 PRODUCT_BUILD_PROP_OVERRIDES += \
