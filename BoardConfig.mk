@@ -130,6 +130,10 @@ TARGET_FS_CONFIG_GEN := $(DEVICE_PATH)/config.fs
 USE_DEVICE_SPECIFIC_GPS := true
 TARGET_NO_RPC := true
 
+# HIDL
+DEVICE_MANIFEST_FILE := $(DEVICE_PATH)/manifest.xml
+DEVICE_MATRIX_FILE   := $(DEVICE_PATH)/compatibility_matrix.xml
+
 # Keymaster
 TARGET_PROVIDES_KEYMASTER := true
 
