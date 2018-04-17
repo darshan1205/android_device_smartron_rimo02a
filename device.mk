@@ -284,6 +284,9 @@ PRODUCT_AAPT_PREF_CONFIG := xxhdpi
 # SDcard
 PRODUCT_CHARACTERISTICS := nosdcard
 
+PRODUCT_BOOT_JARS += \
+    telephony-ext
+
 # Sensors
 PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/android.hardware.fingerprint.xml:system/etc/permissions/android.hardware.fingerprint.xml \
