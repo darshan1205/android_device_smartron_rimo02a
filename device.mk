@@ -193,8 +193,10 @@ PRODUCT_PACKAGES += \
     fstab.qcom \
     init.qcom.rc \
     init.qcom.sh \
+    init.qcom.early_boot.sh \
     init.qcom.usb.rc \
-    init.qcom.usb.sh \
+    init.rimo02a.rc \
+    init.target.rc \
     ueventd.qcom.rc
 
 # Screen density

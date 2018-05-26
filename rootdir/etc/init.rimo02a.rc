@@ -1,0 +1,23 @@
+on post-fs-data
+    # Serial number
+    chmod 644 /persist/rimo.prop
+    chown system root /persist/rimo.prop
+
+    # goodix fingerprint data by simcom start
+    mkdir /data/system/fingerprint/ 0770 system system
+    mkdir /data/gf_data/ 0770 system system
+    chown system system /dev/goodix_fp
+    # goodix fingerprint data by simcom end
+
+service hciattach /system/bin/hci_qcomm_init -e
+    class late_start
+    user bluetooth
+    group bluetooth net_bt_admin oem_2950 diag radio
+    disabled
+    oneshot
+
+on property:bluetooth.hciattach=true
+    start hciattach
+
+on property:bluetooth.hciattach=false
+    setprop bluetooth.status off
