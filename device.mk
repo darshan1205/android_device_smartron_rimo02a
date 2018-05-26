@@ -88,11 +88,11 @@ PRODUCT_PACKAGES += \
 
 # GPS
 PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/gps/flp.conf:system/etc/flp.conf \
-    $(LOCAL_PATH)/gps/gps.conf:system/etc/gps.conf \
-    $(LOCAL_PATH)/gps/izat.conf:system/etc/izat.conf \
-    $(LOCAL_PATH)/gps/sap.conf:system/etc/sap.conf \
-    $(LOCAL_PATH)/gps/xtwifi.conf:system/etc/xtwifi.conf
+    $(LOCAL_PATH)/gps/flp.conf:system/vendor/etc/flp.conf \
+    $(LOCAL_PATH)/gps/gps.conf:system/vendor/etc/gps.conf \
+    $(LOCAL_PATH)/gps/izat.conf:system/vendor/etc/izat.conf \
+    $(LOCAL_PATH)/gps/sap.conf:system/vendor/etc/sap.conf \
+    $(LOCAL_PATH)/gps/xtwifi.conf:system/vendor/etc/xtwifi.conf
 
 # IPA Manager
 PRODUCT_PACKAGES += \
