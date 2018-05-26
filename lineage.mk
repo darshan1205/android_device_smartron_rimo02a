@@ -1,5 +1,5 @@
 #
-# Copyright (C) 2017 The LineageOS Project
+# Copyright (C) 2018 The LineageOS Project
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -24,7 +24,6 @@ PRODUCT_NAME := lineage_rimo02a
 BOARD_VENDOR := smartron
 PRODUCT_DEVICE := rimo02a
 
-
 TARGET_VENDOR_PRODUCT_NAME := srtphone
 TARGET_VENDOR_DEVICE_NAME := rimo02a
 PRODUCT_BUILD_PROP_OVERRIDES += TARGET_DEVICE=rimo02a PRODUCT_NAME=srtphone
@@ -35,5 +34,5 @@ DEVICE_PACKAGE_OVERLAYS += $(LOCAL_PATH)/overlay
 PRODUCT_GMS_CLIENTID_BASE := android-smartron
 
 PRODUCT_BUILD_PROP_OVERRIDES += \
-    BUILD_FINGERPRINT="Smartron/srtphone/rimo02a:7.1.2/T5524INDUQK-373/373:user/release-keys"
-    PRIVATE_BUILD_DESC="rimo02a-user 7.1.2 T5524INDUQK-373 373 release-keys"
+    BUILD_FINGERPRINT="Smartron/srtphone/rimo02a:8.0.0/T5524INDURC-475/475:user/release-keys"
+    PRIVATE_BUILD_DESC="rimo02a-user 8.0.0 T5524INDURC-475 475 release-keys"
