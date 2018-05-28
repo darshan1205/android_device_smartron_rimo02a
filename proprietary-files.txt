@@ -9,7 +9,13 @@ etc/acdbdata/QRD/msm8976-skun-snd-card/QRD_SKUN_Speaker_cal.acdb
 
 # Audio libraries
 lib/hw/audio.primary.msm8952.so
+lib/libaudioroute.so
 lib64/hw/audio.primary.msm8952.so
+lib64/libaudioroute.so
+vendor/lib/libaudioparsers.so
+vendor/lib/libtinycompress_vendor.so
+vendor/lib64/libaudioparsers.so
+vendor/lib64/libtinycompress_vendor.so
 
 # Camera
 lib/hw/camera.msm8952.so
@@ -19,6 +25,8 @@ lib/libmm-qcamera.so
 lib/libmmosal.so
 lib/libqomx_core.so
 vendor/bin/mm-qcamera-daemon
+vendor/lib/libchromaflash.so
+vendor/lib/libfastcvopt.so
 vendor/lib/libflash_pmic.so
 vendor/lib/libjpegdhw.so
 vendor/lib/libjpegdmahw.so
@@ -29,10 +37,13 @@ vendor/lib/libmmjpeg.so
 vendor/lib/libmmosal_proprietary.so
 vendor/lib/libmmqjpeg_codec.so
 vendor/lib/libmmqjpegdma.so
+vendor/lib/liboptizoom.so
 vendor/lib/libqomx_jpegenc.so
 vendor/lib/libqomx_jpegenc_pipe.so
+vendor/lib/libremosaic_daemon.so
 vendor/lib/libseemore.so
 vendor/lib/libtrueportrait.so
+vendor/lib/libubifocus.so
 
 vendor/lib/libmmcamera2_mct_shimlayer.so
 vendor/lib/libmmcamera2_sensor_modules.so
@@ -197,17 +208,15 @@ etc/firmware/cpp_firmware_v1_10_0.fw
 etc/firmware/cpp_firmware_v1_12_0.fw
 
 # Fingerprint
-vendor/bin/hw/android.hardware.biometrics.fingerprint@2.1-service
 vendor/lib/vendor.qti.hardware.fingerprint@1.0.so
 vendor/lib64/libvendor.goodix.hardware.fingerprint@1.0-service.so
 vendor/lib64/libvendor.goodix.hardware.fingerprint@1.0.so
 vendor/lib64/hw/fingerprint.default.so
 vendor/lib64/vendor.qti.hardware.fingerprint@1.0.so
 vendor/lib64/libgoodixfingerprintd_binder.so
-vendor/etc/init/android.hardware.biometrics.fingerprint@2.1-service.rc
+vendor/lib64/libgf_hal.so
+vendor/lib64/libgf_ca.so
 framework/vendor.qti.hardware.fingerprint-V1.0-java.jar
-lib/android.hardware.biometrics.fingerprint@2.1.so
-lib64/android.hardware.biometrics.fingerprint@2.1.so
 
 # NFC
 etc/nqnfcee_access.xml
