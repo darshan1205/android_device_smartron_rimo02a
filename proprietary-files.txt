@@ -26,7 +26,6 @@ lib/libmmosal.so
 lib/libqomx_core.so
 vendor/bin/mm-qcamera-daemon
 vendor/lib/libchromaflash.so
-vendor/lib/libfastcvopt.so
 vendor/lib/libflash_pmic.so
 vendor/lib/libjpegdhw.so
 vendor/lib/libjpegdmahw.so
