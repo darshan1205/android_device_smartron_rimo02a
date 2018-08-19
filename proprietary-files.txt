@@ -319,9 +319,9 @@ etc/cne/wqeclient/VZW/VZW_profile6.xml
 etc/permissions/cneapiclient.xml
 etc/permissions/com.quicinc.cne.xml
 etc/permissions/ConnectivityExt.xml
--framework/cneapiclient.jar
--framework/com.quicinc.cne.jar
--framework/ConnectivityExt.jar
+framework/cneapiclient.jar
+framework/com.quicinc.cne.jar
+framework/ConnectivityExt.jar
 -priv-app/CNEService/CNEService.apk
 vendor/lib64/libcne.so
 vendor/lib64/libcneapiclient.so
@@ -344,9 +344,9 @@ etc/dpm/dpm.conf
 etc/dpm/nsrm/NsrmConfiguration.xml
 etc/permissions/com.qti.dpmframework.xml
 etc/permissions/dpmapi.xml
--framework/com.qti.dpmframework.jar
--framework/dpmapi.jar
--framework/tcmclient.jar
+framework/com.qti.dpmframework.jar
+framework/dpmapi.jar
+framework/tcmclient.jar
 vendor/lib64/libdpmctmgr.so
 vendor/lib64/libdpmfdmgr.so
 vendor/lib64/libdpmframework.so
@@ -388,37 +388,23 @@ lib64/libgf_hal.so
 lib64/libgoodixfingerprintd_binder.so
 lib64/hw/fingerprint.default.so
 
-# Fingerprint Firmware
-etc/firmware/goodixfp.b00
-etc/firmware/goodixfp.b01
-etc/firmware/goodixfp.b02
-etc/firmware/goodixfp.b03
-etc/firmware/goodixfp.b04
-etc/firmware/goodixfp.b05
-etc/firmware/goodixfp.b06
-etc/firmware/goodixfp.mdt
-
 # Gatekeeper
 vendor/lib64/hw/gatekeeper.msm8952.so
 
 # GPS
 bin/loc_launcher
-etc/permissions/com.qti.location.sdk.xml
-etc/permissions/com.qualcomm.location.xml
-framework/com.qti.location.sdk.jar
 lib/hw/gps.default.so
 lib64/hw/gps.default.so
 lib/libgps.utils.so
--lib/libloc_api_v02.so
--lib/libloc_ds_api.so
+lib/libloc_api_v02.so
+lib/libloc_ds_api.so
 lib/libloc_core.so
 lib/libloc_eng.so
 lib64/libgps.utils.so
--lib64/libloc_api_v02.so
--lib64/libloc_ds_api.so
+lib64/libloc_api_v02.so
+lib64/libloc_ds_api.so
 lib64/libloc_core.so
 lib64/libloc_eng.so
--priv-app/com.qualcomm.location/com.qualcomm.location.apk
 vendor/bin/slim_daemon
 vendor/lib/hw/flp.default.so
 vendor/lib/libdataitems.so
@@ -609,7 +595,7 @@ vendor/lib/libperipheral_client.so
 
 # Postprocessing
 etc/permissions/com.qti.snapdragon.sdk.display.xml
--framework/com.qti.snapdragon.sdk.display.jar
+framework/com.qti.snapdragon.sdk.display.jar
 -vendor/app/colorservice/colorservice.apk
 vendor/bin/mm-pp-daemon
 vendor/lib64/libdisp-aba.so
@@ -625,6 +611,8 @@ etc/data/dsi_config.xml
 etc/data/netmgr_config.xml
 etc/data/qmi_config.xml
 etc/permissions/qti_permissions.xml
+-lib64/libqminvapi.so|00088033815db58c85a56b54785af384389e843f
+-lib/libqminvapi.so|deae758b772ddebe07a287ba557d4af40cde3d2f
 vendor/lib64/libdiag.so
 vendor/lib64/libdsi_netctrl.so
 vendor/lib64/libdsutils.so
@@ -670,7 +658,7 @@ bin/tftp_server
 etc/permissions/embms.xml
 etc/permissions/qcnvitems.xml
 etc/permissions/qcrilhook.xml
--framework/embmslibrary.jar
+framework/embmslibrary.jar
 -framework/qcnvitems.jar
 -framework/qcrilhook.jar
 -priv-app/qcrilmsgtunnel/qcrilmsgtunnel.apk
@@ -697,8 +685,8 @@ bin/imscmservice
 bin/imsdatadaemon
 bin/imsqmidaemon
 etc/permissions/imscm.xml
--framework/imscmlibrary.jar
--framework/rcsimssettings.jar
+framework/imscmlibrary.jar
+framework/rcsimssettings.jar
 -vendor/app/ims/ims.apk
 -vendor/app/imssettings/imssettings.apk
 vendor/lib64/lib-dplmedia.so
