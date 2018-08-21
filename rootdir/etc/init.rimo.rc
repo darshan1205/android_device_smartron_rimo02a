@@ -1,0 +1,20 @@
+on post-fs
+    # Serial number
+    chmod 644 /persist/rimo.prop
+    chown system root /persist/rimo.prop
+
+    # goodix fingerprint data by simcom start
+    mkdir /data/system/fingerprint/ 0770 system system
+    chown system system /dev/goodix_fp
+    # goodix fingerprint data by simcom end
+
+# start goodixfp service and fingerprintd service
+service fingerprintd /system/bin/fingerprintd
+    class late_start
+    user system
+    group input
+
+service gx_fpd /system/bin/goodixfingerprintd
+    class late_start
+    user system
+    group input
